@@ -14,7 +14,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="{{ asset('index') }}">
+        <a class="nav-link" href="{{ asset('dashboard') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -33,20 +33,23 @@
 
     <!-- Heading -->
     <!-- Nav Item - Barang -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{ asset('barang') }}">
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ asset ('barang/index') }}">
             <i class="fas fa-box"></i>
-            <span>Barang</span></a>
+            <span>Produk</span></a>
     </li>
 
-    </li>
-
-     <!-- Nav Item - Transaksi -->
-     <li class="nav-item">
-        <a class="nav-link" href="{{ asset('penjualan') }}">
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ asset('transaksi') }}">
             <i class="fas fa-dollar-sign"></i>
             <span>Transaksi</span></a>
-            
     </li>
-        </ul>
+
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ asset('user') }}">
+            <i class="fas fa-address-book"></i>
+            <span>User</span></a>
+    </li>
+
+ </ul>
         <!-- End of Sidebar -->

@@ -8,14 +8,15 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     */
+     */ 
     public function up(): void
     {
-        Schema::create('detail_penjualans', function (Blueprint $table) {
+        Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('penjualan_id')->references('id')->on('penjualans');
-            $table->foreignId('barang_id')->references('id')->on('barangs');
-            $table->bigInteger('harga');
+            $table->integer('no_transaksi')->nullable();
+            $table->date('tgl_transaksi')->nullable();
+            $table->integer('total_bayar')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('detail_penjualans');
+        Schema::dropIfExists('transactions');
     }
 };

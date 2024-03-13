@@ -8,16 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Barang extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'nama_barang',
-        'harga',
-        'stok_barang',
-        'foto',
-    ];
+protected $fillable = [ 'jenis_barang', 'nama_barang', 'harga','stok' ];
 
-    public function penjualan() 
-	{
-		return $this->hasOne('App\Models\Penjualan', 'penjualan_id');
-	}
-  
+// public function transaction()
+// {
+//     return $this->hasMany(Transaction::class);
+// }
+//     protected $guarded = ['id'];
 }

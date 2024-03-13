@@ -1,87 +1,78 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
-use App\Models\Barang;
 use Illuminate\Http\Request;
+use App\Models\Barang;
+
 
 class BarangController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Menampilkan halaman input data barang
     public function index()
     {
-        return view ('pages.barang');
+       
+         $barangs = Barang::all();
+         return view('barang/index',['barangs'=> $barangs]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
-    {
-        return view('pages.barang');
+    {   
+        return view('barang.tambah');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function edit($id)
+    {
+        $barangs = Barang::find($id);
+        return view('barang/edit', compact('barangs'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'jenis_barang' => 'required|string|max:255',
+            'nama_barang' => 'required|string|max:255',
+            'harga' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+        ]);
+
+        $barangs = Barang::findOrFail($id);
+
+        // Update the existing data
+        $barangs->update([
+            'jenis_barang' => $request->jenis_barang,
+            'nama_barang' => $request->nama_barang,
+            'harga' => $request->harga,
+            'stok' => $request->stok,
+        ]);
+
+        return redirect()->route('barang')->with('success', 'Data barang berhasil diperbarui');
+    }
+
+    public function destroy($id)
+{
+    Barang::findOrFail($id)->delete();
+
+    return redirect()->back()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ->with('success', 'Barang berhasil dihapus');
+}
+public function show()
+    {
+        //
+    }
+
+
+    // Menyimpan data barang baru
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'foto'     => 'required|image|mimes:png,jpg,jpeg',
-            'nama_barang'     => 'required',
-            'harga'   => 'required',
-            'stok'   => 'required'
+        $data = $request->validate([
+            'jenis_barang' => 'required|string|max:255',
+            'nama_barang' => 'required|string|max:255',
+            'harga' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
         ]);
-        $foto = $request->file('image');
-        $foto->storeAs('public/blogs', $foto->hashName());
-    
-        $barangs = Barang::create([
-            'image'     => $foto->hashName(),
-            'nama_barang'     => $request->nama_barang,
-            'harga'   => $request->harga,
-            'stok'    => $request->stok
-        ]);
-    
-        if($barangs){
-            //redirect dengan pesan sukses
-            return redirect()->route('barang.index')->with(['success' => 'Data Berhasil Disimpan!']);
-        }else{
-            //redirect dengan pesan error
-            return redirect()->route('barang.index')->with(['error' => 'Data Gagal Disimpan!']);
-        }
-    }
+        
+        Product::create($data);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Barang $barang)
-    {
-        //
+        return redirect()->back()->with('success', 'Data barang berhasil ditambahkan');
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Barang $barang)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Barang $barang)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Barang $barang)
-    {
-        //
-    }
-}
+ }
